@@ -44,7 +44,6 @@ fprintf('Slope of the line is %s \n',vpa(slope));
 fprintf('Intercept on the Y-axis is %s \n',vpa(intercept));
 
 % (e) Searching for a point where the tangent is the same as the given slope
-% solving the problem using the bisection method
 format long 
 slope_target=input('Enter the slope Target: \n');
 df=diff(f,Ca);
