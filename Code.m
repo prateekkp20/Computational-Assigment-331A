@@ -44,27 +44,64 @@ fprintf('Slope of the line is %s \n',vpa(slope));
 fprintf('Intercept on the Y-axis is %s \n',vpa(intercept));
 
 % (e) Searching for a point where the tangent is the same as the given slope
+% solving the problem using the bisection method
+format long 
+slope_target=input('Enter the slope Target: \n');
+f_bisection = diff(f)-slope_target;
+a = input('Enter first starting point\n');
+b = input('Enter second starting point\n');
+disp('Now subsequent enter stopping criteria: ');
+rel_err = input('Enter the percentage relative error allowed in solution\n');
+func_value = input('Enter Convergence criteria for the function value, i.e., how close f(x) is to zero\n');
+max_iter = input('Enter allowed maximum number of iterations\n');
+              
+c1 = 0;
+iter = 0;
+c2 = (a+b)/2;
+err = abs(100*(c2-c1)/c2);
+stop_err = 0;
+stop_iter=0;
+stop_value=0;
+i=1;
 
-% slope_target=input('Enter the slope Target: \n');
+while ((err > rel_err) && (iter<max_iter) &&(abs(f_bisection(c2))>func_value))
+    if(f_bisection(a)*f_bisection(b)<0)
+        c2 = (a+b)/2;
+        if(f_bisection(a)*f_bisection(c2)<0) b = c2;
+        else a = c2;
+        end
+    end
+    err = abs(100*(c2-c1)/c2);
+    c1 = c2;
+    p=c2;
+    errg(i)=err;
+    iter = iter + 1;
+    i=i+1;
+    if(err<rel_err)
+        stop_err=1;
+    end
+
+    if(abs(f_bisection(c2))<func_value)
+        stop_value=1;
+    end
+    if(iter==max_iter)
+        stop_iter=1;
+    end
+end
+
+fprintf('Root is %f\n',p);
+
+if(stop_err)
+    disp('Iterations stopped as relative error stopping criteria was met');
+end
+
+if(stop_iter)
+    disp('Iterations stopped as maximum number of iterations were executed');
+end
+
+if(stop_value)
+    disp('Iterations stopped as function value was close to zero as required');
+end
+
+%else this was the other method
 % Ca_tangent = fzero(@(x) (diff(f) - slope_target), [Ca_min,Ca_max]);
-% Evaluate the function at the interval endpoints
-f_min = double(f(Ca_min));
-f_max = double(f(Ca_max));
-
-% Check that the function values at the interval endpoints are finite and real
-if ~isfinite(f_min) || ~isreal(f_min) || ~isfinite(f_max) || ~isreal(f_max)
-error('Function values at interval endpoints must be finite and real.')
-end
-
-% Prompt the user for the slope target
-slope_target=input('Enter the slope target: \n');
-
-% Find the tangent point Ca_tangent using fzero
-try
-Ca_tangent = fzero(@(x) (diff(f) - slope_target), [Ca_min,Ca_max]);
-catch
-error('Unable to find a tangent point. Check that the function and interval are valid.')
-end
-
-% Display the tangent point
-fprintf('The tangent point is Ca = %f\n', Ca_tangent)
