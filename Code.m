@@ -1,10 +1,11 @@
 % Define the constant values k1 and K2
 k1 = input('Enter k1: ');
 K2 = input('Enter k2: ');
+K3 = input('Enter k3: ');
 
 % Define the function f(Ca)
 syms Ca
-f(Ca) = (k1*Ca)/(1 + K2*Ca^2);
+f(Ca) = (k1*Ca)/(1 + K2*Ca + K3*Ca^2);
 
 % Define the domain of the function
 disp('Define the domain');
@@ -51,13 +52,22 @@ format long
 slope_target=input('Enter the slope Target: ');
 df=diff(f,Ca);
 function1=matlabFunction(df-slope_target);
-plot(C,function1(C));
+% plot(C,function1(C));
 x=solve(function1,Ca);
 x=vpa(x');
+count=0;
 for i=1:length(x)
     if (x(i)<=Ca_max) && (x(i)>=Ca_min)
+        count=count+1;
+        x1(count) = x(i);
         fprintf('The required point is %s\n',x(i));
     end
 end
 grid on
+for i=1:length(x1)
+    y3(i)=f(x1(i));
+    syms a
+    lineeq(a)=slope_target*(a-x1(i))+y3(i);
+    plot(C,lineeq(C));
+end
 hold off;
