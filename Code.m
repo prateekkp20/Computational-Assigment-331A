@@ -7,6 +7,7 @@ syms Ca
 f(Ca) = (k1*Ca)/(1 + K2*Ca^2);
 
 % Define the domain of the function
+disp('Define the domain');
 Ca_min = input('Enter Ca_min: ');
 Ca_max = input('Enter Ca_max: ');
 
@@ -22,6 +23,8 @@ C = linspace(Ca_min,Ca_max);
 Area = trapz(C, f(C));
 fprintf('The area under the curve is: %s\n',vpa(Area))
 plot(C,f(C));
+xlabel('Concentration');
+ylabel('Rate');
 hold on;
 
 % (c) Finding minimum or maximum functional value
@@ -45,8 +48,16 @@ fprintf('Intercept on the Y-axis is %s \n',vpa(intercept));
 
 % (e) Searching for a point where the tangent is the same as the given slope
 format long 
-slope_target=input('Enter the slope Target: \n');
+slope_target=input('Enter the slope Target: ');
 df=diff(f,Ca);
 function1=matlabFunction(df-slope_target);
-x=fzero(function1,10);
-fprintf('The required point is %s\n',x);
+plot(C,function1(C));
+x=solve(function1,Ca);
+x=vpa(x');
+for i=1:length(x)
+    if (x(i)<=Ca_max) && (x(i)>=Ca_min)
+        fprintf('The required point is %s\n',x(i));
+    end
+end
+grid on
+hold off;
