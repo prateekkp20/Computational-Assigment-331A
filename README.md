@@ -21,7 +21,7 @@ System:
 5. a pfr with recycle
 
 Computer code should also be able to determine the rate of the reaction from the following measurements used to study the degradation of the organics in the wastewater samples using a laboratory scale.
-MFR: 
+MFR: \
 Ca (inlet) = 1-25 mmol/m3\
 Ca (exit) = 0.1-5 mmol/m3\
 Tau(min) = 50-1
