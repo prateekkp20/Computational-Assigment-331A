@@ -24,4 +24,4 @@ Computer code should also be able to determine the rate of the reaction from the
 MFR: 
 Ca (inlet) = 1-25 mmol/m3\
 Ca (exit) = 0.1-5 mmol/m3\
-Tau(min) = 50-1\
+Tau(min) = 50-1
