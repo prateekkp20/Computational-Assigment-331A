@@ -16,7 +16,8 @@ Required concentration in the treated stream = 0.1-2 mmol/m3
 System:
 1. a single pfr
 2. a single CSTR
-3. two start tank of any size 4. a combination of pfr and mfr
+3. two stirred tank of any size 
+4. a combination of pfr and mfr
 5. a pfr with recycle
 
 Computer code should also be able to determine the rate of the reaction from the following measurements used to study the degradation of the organics in the wastewater samples using a laboratory scale.
