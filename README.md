@@ -9,8 +9,8 @@ given general rate expression of the form -rA = f(Ca) = k1Ca/(1 +K2Ca^2) or kCa(
 
 # Assignment 2
 Develop computer code to determine the required minimum volume of different reactor systems for treating an organic containing effluent the inputs are:
-Flow rate of the wastewater = 0.05-0.2 m3/min
-Concentration of the organics in wastewater = 1-20 mmol/m3
+Flow rate of the wastewater = 0.05-0.2 m3/min \
+Concentration of the organics in wastewater = 1-20 mmol/m3 \
 Required concentration in the treated stream = 0.1-2 mmol/m3
 
 System:
