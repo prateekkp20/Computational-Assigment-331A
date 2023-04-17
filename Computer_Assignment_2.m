@@ -1,3 +1,4 @@
+clear
 Ca0 = [2 5 6 6 11 14 16 24]; % given inlet flow rate data
 Ca = [0.5 3 1 2 6 10 8 4]; % given outlet flow rate data
 T_res = [30 1 50 8 4 20 20 4]; % given tau data
@@ -107,23 +108,28 @@ end
 
 if n == 'D'
         %combination of PFR and CSTR
+        %here we find the minumum -1/rA and divide the area into pfr and
+        %cstr at that point
         f = @(x) spline(Ca,rA_inv,x) ;
-        [min_area2, Ca_int2] = min(f(xQ));
-        V_1 = (Ca_i - xQ(Ca_int2))*(spline(Ca,rA_inv,xQ(Ca_int2)))*vo;
-        x_values = Ca_out:0.01:xQ(Ca_int2);
+        [min_area2, Ca_mid2] = min(f(xQ));
+        %volume of the CSTR required
+        V_1 = (Ca_i - xQ(Ca_mid2))*(spline(Ca,rA_inv,xQ(Ca_mid2)))*vo;
+        x_values = Ca_out:0.01:xQ(Ca_mid2);
         rA_x_values = spline(Ca,rA_inv,x_values);
-        V_2 = trapz(x_values, rA_x_values)*vo;
-        V_tot = V_1 + V_2;
+        V_2 = trapz(x_values, rA_x_values)*vo; %volume of the PFR required
+        V_tot = V_1 + V_2; %total volume
         disp(['The total minimum value in case MFR followed by PFR ', num2str(V_tot)]);
         disp(['The volume of MFR is: ', num2str(V_1)]);
         disp(['The volume of PFR is: ', num2str(V_2)]);
-        X1 = [Ca_i; xQ(Ca_int2)];
-        Y1 = [yQ(Ca_int2),yQ(Ca_int2) ];
+        %coloring the area of CSTR
+        X1 = [Ca_i; xQ(Ca_mid2)];
+        Y1 = [yQ(Ca_mid2),yQ(Ca_mid2) ];
         hold on;
         area(X1,Y1);
+        %coloring the area of pfr
         area(x_values,rA_x_values);
-        plot(xQ, yQ,'k', 'LineWidth', 2);
-        plot(Ca,rA_inv,'ko','LineWidth',2,'MarkerSize',4);
+        plot(xQ, yQ,'k', 'LineWidth', 2);%plotting -1/rA vs Concentration Curve obtained from spline interpolation
+        plot(Ca,rA_inv,'ko','LineWidth',2,'MarkerSize',4);%plotting the given data points
         xlabel('Ca')
         ylabel('-1/rA')
         title('1/rA vs Concentration Curve')
@@ -148,4 +154,3 @@ if n == 'E'
         title('1/rA vs Concentration Curve')
         grid on
 end
- 
